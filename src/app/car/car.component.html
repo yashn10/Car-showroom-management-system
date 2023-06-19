@@ -1,0 +1,132 @@
+<h2 style="margin-top: 100px; text-align: center;">Cars List</h2>
+<button type="button" class="btn btn-success mt-3 mb-3" (click)="openModal(template1)">Add
+    Cars</button>
+
+<form [formGroup]="carForm">
+
+    <ng-template #template1>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Add Cars</h4>
+            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group text-center">
+                <img src="../assets/car.png" style="width: 100px;">
+            </div>
+            <div class="form-group">
+                <label class="form-label" style="font-weight: 700;">Model:</label>
+                <i class="fa fa-user icon"></i>
+                <input type="text" class="form-control" placeholder="Enter Car Model" formControlName="firstname">
+                <div class="red" *ngIf="issubmitted==true">
+                    <div *ngIf="carForm.controls['firstname'].errors?.['required']">
+                        Subject is required..!</div>
+                    <div *ngIf="carForm.controls['firstname'].errors?.['minLength']">
+                        Subject Name should be min 3 characters..!</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" style="font-weight: 700;">Number:</label>
+                <i class="fa fa-user icon"></i>
+                <input type="number" class="form-control" placeholder="Enter Car Number" formControlName="lastname">
+                <div class="red" *ngIf="issubmitted==true">
+                    <div *ngIf="carForm.controls['lastname'].errors?.['required']">
+                        Subject is required..!</div>
+                    <div *ngIf="carForm.controls['lastname'].errors?.['minLength']">
+                        Subject Name should be min 3 characters..!</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" style="font-weight: 700;">Manufacturer:</label>
+                <i class="fa fa-envelope icon"></i>
+                <input type="text" class="form-control" placeholder="Enter Car Manufacturer" formControlName="email">
+                <div class="red" *ngIf="issubmitted==true">
+                    <div *ngIf="carForm.controls['email'].errors?.['required']">
+                        Subject is required..!</div>
+                    <div *ngIf="carForm.controls['email'].errors?.['minLength']">
+                        Subject Name should be min 3 characters..!</div>
+                </div>
+            </div>
+            <!-- <div class="form-group">
+                <label class="form-label" style="font-weight: 700;">Car Price:</label>
+                <i class="fa fa-envelope icon"></i>
+                <input type="number" class="form-control" placeholder="Enter Car Price" [(ngModel)]="contact">
+            </div> -->
+            <button type="button" class="btn" style="background-color: #cbc6c6;border: none;"
+                (click)="clear()">Clear</button>
+            <button type="submit" class="btn btn-success ml-3" (click)="submit()"
+                *ngIf="iseditclicked == 'no'">Submit</button>
+            <button type="button" class="btn btn-success ml-3" (click)="update()"
+                *ngIf="iseditclicked == 'yes'">Update</button>
+        </div>
+    </ng-template>
+
+</form>
+
+<table class="table table-hover text-center" style="height: 400px;">
+    <thead>
+        <tr style="text-align: center;">
+            <th>Model</th>
+            <th>Number</th>
+            <th>Manufacturer</th>
+            <!-- <th>Total Price</th> -->
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody style="overflow-y:auto; height:300px;">
+        <tr *ngFor="let employee of employeelist; let i = index">
+            <td style="width: 270px;">{{employee.firstname}}</td>
+            <td style="width: 270px;">{{employee.lastname}}</td>
+            <td style="width: 280px;">{{employee.email}}</td>
+            <!-- <td style="width: 270px;">{{employee.contact}}</td> -->
+            <td style="width: 260px;">
+                <button type="button" class="btn" (click)="openModal(template1)" (click)="edit(i)"><img
+                        src="../assets/edit (1).png" style="width: 30px;">
+                    <!-- <ng-template #template1>
+                        <div class="modal-header">
+                            <h4 class="modal-title pull-left">Update Cars List</h4>
+                            <button type="button" class="btn-close close pull-right" aria-label="Close"
+                                (click)="modalRef?.hide()">
+                                <span aria-hidden="true" class="visually-hidden">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 700;">Model:</label>
+                                <input type="text" class="form-control" placeholder="Enter Car Model"
+                                    [(ngModel)]="firstname">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 700;">Number:</label>
+                                <input type="text" class="form-control" placeholder="Enter Car Number"
+                                    [(ngModel)]="lastname">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 700;">Manufacturer:</label>
+                                <input type="text" class="form-control" placeholder="Enter Car Manufacturer"
+                                    [(ngModel)]="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="font-weight: 700;">Total Price:</label>
+                                <input type="number" class="form-control" placeholder="Enter Total Price"
+                                    [(ngModel)]="contact">
+                            </div>
+                            <button type="button" class="btn" style="background-color: #cbc6c6;border: none;"
+                                (click)="clear()">Clear</button>
+                            <button type="submit" class="btn btn-success ml-3" (click)="submit()"
+                                *ngIf="iseditclicked == 'no'"
+                                [disabled]="firstname == '' || lastname == '' || email == '' || contact == '' ">Submit</button>
+                            <button type="button" class="btn btn-success ml-3" (click)="update()"
+                                *ngIf="iseditclicked == 'yes'">Update</button>
+                        </div>
+                    </ng-template> -->
+                </button>
+                <button type="button" class="btn" (click)="delete(i)"><img src="../assets/delete (3).png"
+                        style="width: 30px;"></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
